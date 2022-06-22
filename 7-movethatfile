@@ -1,0 +1,2 @@
+#!/bin/bash
+mv 0x00-shell_basics/tmp/betty 0x00-shell_basics/tmp/my_first_directory
