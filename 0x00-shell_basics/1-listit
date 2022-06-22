@@ -1,2 +1,3 @@
 #!/bin/bash
-echo $(ls -1)
+echo  $(ls -1)
+echo -e '\n'
