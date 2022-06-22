@@ -1,0 +1,2 @@
+#!/bin/bash
+mkdir -p 0x00-shell_basics/tmp/my_first_directory
