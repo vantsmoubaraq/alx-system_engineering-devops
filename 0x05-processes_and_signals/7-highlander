@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# stop_me_if_you_can 
+# Bash script that displays: (1) To infinity and beyond indefinitely (2) With a sleep 2 in between each iteration (3) I am invincible!!! when receiving a SIGTERM signal
 
 i=0
-while [ $i -lt 3 ]
+while [ $i -le 3 ]
 do
-trap echo "I am invincible!!!" SIGTERM
-echo "To infinity and beyond"
-sleep 2
+    trap "echo I am invincible!!!" SIGTERM
+    echo "To infinity and beyond"
+    sleep 2
 done
