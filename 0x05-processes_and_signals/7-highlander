@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# stop_me_if_you_can 
+
+i=0
+while [ $i -lt 3 ]
+do
+trap echo "I am invincible!!!" SIGTERM
+echo "To infinity and beyond"
+sleep 2
+done
