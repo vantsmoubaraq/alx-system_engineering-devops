@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# displays all active IPv4 IPs on the machine it’s executed on
-ifconfig  | '/inet addr/ {print $2}' | cut -d : -f 2
+# Bash script that displays all active IPv4 IPs on the machine it’s executed on
+ifconfig | awk '/inet addr/ {print $2}' | cut -d : -f 2
