@@ -1,26 +1,6 @@
-# install nginx, listen on port 80
-# GET with curl return "Hello World"
-# redirection must a 301 Moved permanently
+# Installs a Nginx server
 
-package { 'nginx':
-  ensure => installed,
-  name   => 'nginx',
-}
-
-file { '/var/www/html/index.html':
-  content => 'Hello World',
-  path    => '/var/www/html/index.html'
-}
-
-file_line { 'title':
-  ensure   => present,
-  path     => '/etc/nginx/sites-available/default',
-  after    => 'server_name _;',
-  line     => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
-  multiple => true
-}
-
-service { 'nginx':
-  ensure  => running,
-  require => Package['nginx'],
+exec {'install':
+  provider => shell,
+  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Tolulope05 permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
 }
