@@ -1,0 +1,8 @@
+#!/bin/bash
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo 'Hello World' > /var/www/html/index.nginx.debian.html
+header="\t\tadd_header X-Served-By '$hostname';"
+sed -i "server_name_;\a $header" /etc/nginx/sites-enabled/default
+service nginx restart
