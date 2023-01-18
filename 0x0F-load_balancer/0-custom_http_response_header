@@ -1,8 +1,9 @@
-#!/bin/bash
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo 'Hello World' > /var/www/html/index.nginx.debian.html
-header="\t\tadd_header X-Served-By '$hostname';"
-sed -i "server_name_;\a $header" /etc/nginx/sites-enabled/default
-service nginx restart
+#!/usr/bin/env bash
+# configures a brand new Ubuntu machine, Configure Nginx so that its HTTP response contains a custom header (on web-01 and web-02), custom HTTP header must be X-Served-By
+
+sudo apt update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+header="\t\tadd_header X-Served-By '$HOSTNAME';"
+sudo sed -i "31i\ $header" /etc/nginx/sites-enabled/default
+sudo service nginx restart
