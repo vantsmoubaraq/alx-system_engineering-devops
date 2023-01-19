@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
-# Configures Nginx so that its HTTP response contains a custom header
-#   The name of the custom HTTP header must be X-Served-By
-#   The value of the custom HTTP header is the hostname of the server Nginx is running
-# Configures new Ubuntu machine to respect above requirements
-sudo apt-get update
+# configure web-02 to be identical to web-01
+# The name of the custom HTTP header must be X-Served-By
+# The value of the custom HTTP header must be the hostname of the server Nginx is running on
+#sudo sed -i 's/server_name _;.*/server_name _;\n\tadd_header X-Served-By \$hostname;/' /etc/nginx/sites-enabled/default 
+sudo apt-get -y update
 sudo apt-get -y install nginx
-
-# Configure firewall to allow request through Port 80
 sudo ufw allow 'Nginx HTTP'
-
-# Create an index static page
+sudo mkdir -p /var/www/html
+sudo chmod -R 755 /var/www
 echo 'Hello World!' | sudo tee /var/www/html/index.html
-
-# code to redirect to YouTube site (Ex. redirect_me to www.youtube.com)
-newString="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com\/watch\?v=QH2-TGUlwu4 permanent;\n\tlocation \/ {add_header X-Served-By \$hostname;}"
-sudo sed -i "s/server_name _;/$newString/" /etc/nginx/sites-enabled/default
-
-# code to create error page and add a redirect for error 404
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
-newStringTwo="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-sudo sed -i "s/listen 80 default_server;/$newStringTwo/" /etc/nginx/sites-enabled/default
+server_config=\
+"server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	add_header X-Served-By \$hostname;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+	if (\$request_filename ~ redirect_me){
+		rewrite ^ https://youtube.com permanent;
+	}
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+}"
 
-# restart the server
+echo "$server_config" | sudo tee  /etc/nginx/sites-enabled/default
 sudo service nginx restart
