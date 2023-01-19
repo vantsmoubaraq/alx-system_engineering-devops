@@ -23,8 +23,8 @@ frontend onirele-frontend
 backend onirele-backend
         balance roundrobin
         mode http
-        server 68701-web-01 54.165.12.83:80 check
-        server 68701-web-02 54.237.93.128:80 check
+        server 70974-web-01 100.26.246.254:80 check
+        server 70974-web-02 54.165.219.197 check
 "
 echo "$configString" | sudo tee -a /etc/haproxy/haproxy.cfg
 
