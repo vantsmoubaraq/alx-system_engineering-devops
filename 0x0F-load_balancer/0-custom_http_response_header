@@ -29,6 +29,5 @@ server_config=\
 		internal;
 	}
 }"
-sed -i -e "/http {/a /n/tadd_header X-Served-By $hostname;"
 echo "$server_config" | sudo tee  /etc/nginx/sites-enabled/default
 sudo service nginx restart
