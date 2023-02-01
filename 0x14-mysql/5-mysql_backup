@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # creates sql dump
 
-mysqldump all-databases -u root -p "$1" -r backup.sql
+mysqldump --all-databases -u root -p "$1" -r backup.sql
 tar -cvzf "$(date +%m-%d-%Y).tar.gz" backup.sql
