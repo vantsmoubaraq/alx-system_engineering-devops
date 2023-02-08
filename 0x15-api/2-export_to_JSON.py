@@ -1,28 +1,26 @@
 #!/usr/bin/python3
+"""
+export to json
+"""
 
-"""returns information about employee TODO list progress"""
-
+import json
 import requests
 from sys import argv
-import json
 
 if __name__ == "__main__":
-    """returns information about employee TODO list progress"""
     if len(argv) > 1:
-        url = "https://jsonplaceholder.typicode.com/users"
-        user_id = int(argv[1])
-
-        response = requests.get("{}/{}".format(url, user_id))
-        name = response.json().get("name")
-
-        if name is not None:
-            tasks = requests.get("{}/{}/todos".format(url, user_id))
-            tasks = tasks.json()
-
-            all_tasks = {}
-            all_tasks.update({user_id: [{"task": task["title"], "completed":
-                              task["completed"], "username": name}
-                              for task in tasks]})
-
-            with open("{}.json".format(user_id), "w") as f:
-                json.dump(all_tasks, f)
+        userId = argv[1]
+        url = "https://jsonplaceholder.typicode.com/"
+        user = requests.get("{}users/{}".format(url, userId)).json()
+        username = user.get('username')
+        todos = requests.get("{}users/{}/todos".format(url, userId)).json()
+        t = [{"task": t.get("title"),
+              "completed": t.get("completed"),
+              "username": username} for t in todos]
+        bj = {}
+        bj[userId] = t
+        with open("{}.json".format(userId), 'w') as filejs:
+            json.dump(bj, filejs)
+    else:
+        print("usage: {} <user_id>".format(argv[0]))
+        exit(1)
