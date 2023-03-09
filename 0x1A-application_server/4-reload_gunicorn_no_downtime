@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-ps auxf | grep gunicorn | awk '{ print $2 }' | xargs kill -SIGHUP
+ps auxf | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
