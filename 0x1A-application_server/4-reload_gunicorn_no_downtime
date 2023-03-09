@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-kill -HUP `ps -C gunicorn fch -o pid | head -n 1`
+sudo kill -SIGUSR2 $(pgrep gunicorn | head -n 1)
