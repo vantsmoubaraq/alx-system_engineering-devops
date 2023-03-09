@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Get the process ID of the Gunicorn master process
+master_pid=$(cat /run/gunicorn.pid)
+
+# Send a SIGHUP signal to the master process to gracefully reload the workers
+kill -HUP $master_pid
+
+# Wait for the workers to finish processing requests and shut down gracefully
+sleep 10
+
+# Verify that the reload was successful by checking the process ID of the new master process
+new_master_pid=$(cat /run/gunicorn.pid)
+if [[ $new_master_pid -ne $master_pid ]]; then
+  echo "Gunicorn reload successful"
+else
+  echo "Gunicorn reload failed"
+fi
