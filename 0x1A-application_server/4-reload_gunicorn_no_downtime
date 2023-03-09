@@ -1,5 +1,2 @@
 #!/usr/bin/env bash
-#sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
-#ps auxf | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
-pid=$(ps auxf | grep '[g]unicorn' | awk '{print $2}')
-kill -HUP $pid
+ps auxf | grep gunicorn | awk '{ print $2 }' | xargs kill -SIGHUP
