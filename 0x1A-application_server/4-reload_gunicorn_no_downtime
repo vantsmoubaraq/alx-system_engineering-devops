@@ -1,7 +1,3 @@
 #!/usr/bin/bash
 
-# Get the process ID of the Gunicorn master process
-master_pid=$(pgrep gunicorn | head -n 1)
-
-# Send a SIGHUP signal to the master process to gracefully reload the workers
-kill -HUP $master_pid
+kill -HUP $(pgrep gunicorn | head -n 1)
