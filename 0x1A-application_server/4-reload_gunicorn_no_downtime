@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 #sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
 ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
+sleep 10
