@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#reloads gunicorn gracefully pgrep gunicorn | head -n 1 | xargs kill -HUP
+#reloads gunicorn gracefully
 
-if pgrep -c gunicorn > /dev/null; then
-	pkill -HUP gunicorn
+pkill -HUP gunicorn
