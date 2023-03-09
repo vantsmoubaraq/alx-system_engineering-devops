@@ -1,4 +1,2 @@
 #!/usr/bin/bash
-#sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
-#sleep 10
-sudo systemctl restart gunicorn.service
+sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
