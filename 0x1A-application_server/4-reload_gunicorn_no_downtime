@@ -1,14 +1,4 @@
 #!/usr/bin/env bash
-#reloads gunicorn gracefully pkill -HUP gunicorn
+#reloads gunicorn gracefully 
 
-pid=$(pgrep gunicorn | head -n 1)
-
-# Reload the gunicorn worker processes with zero downtime
-if [ -n "$pid" ]; then
-    kill -HUP "$pid"
-    sleep 1
-    kill -0 "$pid" 2>/dev/null && kill -TERM "$pid" && sleep 1
-    exec gunicorn --preload --workers 4 --bind 0.0.0.0:8000 myapp:app
-else
-    exec gunicorn --preload --workers 4 --bind 0.0.0.0:8000 myapp:app
-fi
+pkill -HUP gunicorn
