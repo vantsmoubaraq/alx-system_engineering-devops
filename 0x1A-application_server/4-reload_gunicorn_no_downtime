@@ -1,2 +1,3 @@
 #!/usr/bin/bash
-sudo kill -SIGUSR2 $(pgrep gunicorn | head -n 1)
+sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
+sleep 10
