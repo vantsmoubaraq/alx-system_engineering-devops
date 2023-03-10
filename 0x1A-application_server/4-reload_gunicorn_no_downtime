@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-#reloads gunicorn gracefully 
-
-pkill -HUP gunicorn
+#reload gunicorn
+sudo kill -SIGHUP $(pgrep gunicorn | head -n 1)
+sleep 10
